@@ -1,14 +1,16 @@
 version: "3"
-services:
+services:  # Containers to be created
   web:
     build:
-      context: . # Look in current directory for docker-compose.yml
-      dockerfile: Dockerfile.dev # Use this Dockerfile
+      context: .  # Look in current dir for docker-compose.yml
+      dockerfile: Dockerfile.dev  # Use this specific Dockerfile
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Map ports outside the container to ports inside the container (host:container). 
     volumes:
-      - /app/node_modules
-      - .:/app
+      - /app/node_modules  # Do not reference this dir to one outside the container. Use the container dir!
+      - .:/app  # Use the current dir (outside the container) AS the /app dir reference inside the container.
+                # This "DEV MODE" reference allows for code modifications to be reflected immediately in the running
+                # container without having to stop the container, rebuild the image, and restart the container.
   tests:
     build:
       context: .
