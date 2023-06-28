@@ -15,8 +15,10 @@ jobs:
  
       - name: Generate deployment package
         run: zip -r deploy.zip . -x '*.git*'
- 
-      - name: Deploy to EB
+  deploy:
+      needs: build
+      steps:
+      - name: Deploy to Elastic Beanstalk
         uses: einaregilsson/beanstalk-deploy@v18
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
